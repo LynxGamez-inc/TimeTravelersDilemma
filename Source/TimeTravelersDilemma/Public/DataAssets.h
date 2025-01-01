@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
-#include "TTDPrimaryDataAssets.generated.h"
+#include "DataAssets.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class TIMETRAVELERSDILEMMA_API UTTDPrimaryDataAssets : public UPrimaryDataAsset
+class TIMETRAVELERSDILEMMA_API UDataAssets : public UPrimaryDataAsset
 {
 	GENERATED_BODY()
 

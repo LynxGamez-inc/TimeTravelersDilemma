@@ -11,7 +11,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
-class UTTDPrimaryDataAssets;
+class UDataAssets;
 
 UCLASS()
 class TIMETRAVELERSDILEMMA_API AMainCharacter : public ACharacter
@@ -55,7 +55,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data Assets")
-	TObjectPtr<UTTDPrimaryDataAssets> DataAssetInstance;
+	TObjectPtr<UDataAssets> SpeedDataAsset;
 	
 	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
 	void MoveForward(const FInputActionValue& Value);

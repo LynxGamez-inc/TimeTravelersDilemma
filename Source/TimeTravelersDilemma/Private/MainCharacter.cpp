@@ -10,7 +10,7 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
-#include "TTDPrimaryDataAssets.h"
+#include "DataAssets.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -36,12 +36,9 @@ void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (IsValid(DataAssetInstance))
-	{
-		MovementSpeed = DataAssetInstance->CharacterSpeed;
-	}
+	AppendDataAssets();
 	//implement EnhancedInput
-	APlayerController* PlayerController = Cast<APlayerController>(Controller);
+	const APlayerController* PlayerController = Cast<APlayerController>(Controller);
 	if (PlayerController)
 	{
 		UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
@@ -78,9 +75,9 @@ void AMainCharacter::Jump()
 
 void AMainCharacter::AppendDataAssets()
 {
-	if (DataAssetInstance)
+	if (IsValid(SpeedDataAsset))
 	{
-		//MovementSpeed = DataAssetClass->
+		MovementSpeed = SpeedDataAsset->CharacterSpeed;
 	}
 }
 
