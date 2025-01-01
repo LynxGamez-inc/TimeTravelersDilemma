@@ -65,6 +65,11 @@ void AMainCharacter::MoveForward(const FInputActionValue& Value)
 	
 }
 
+void AMainCharacter::Jump()
+{
+	Super::Jump();
+}
+
 // Called every frame
 void AMainCharacter::Tick(float DeltaTime)
 {
@@ -81,6 +86,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	if (EnhancedInputComponent)
 	{
 		EnhancedInputComponent->BindAction(MoveAction,ETriggerEvent::Triggered,this,&AMainCharacter::MoveForward);
+		EnhancedInputComponent->BindAction(JumpAction,ETriggerEvent::Triggered,this,&AMainCharacter::Jump);
 	}
 
 }

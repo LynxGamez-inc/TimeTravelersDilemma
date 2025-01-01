@@ -41,6 +41,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
 	UInputAction* MoveAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
+	UInputAction* JumpAction;
+	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float MovementSpeed=100;
 protected:
@@ -49,8 +52,6 @@ protected:
 	
 	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
 	void MoveForward(const FInputActionValue& Value);
-
-	
-
+	void Jump() override;
 
 };
