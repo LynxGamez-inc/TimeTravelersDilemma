@@ -61,6 +61,9 @@ protected:
 	void MoveForward(const FInputActionValue& Value);
 	void Jump() override;
 	void AppendDataAssets();
+	
+	UFUNCTION(BlueprintCallable, Category = "Interaction")
+	void OnComponentBeginOverlap( UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 private:
 	
