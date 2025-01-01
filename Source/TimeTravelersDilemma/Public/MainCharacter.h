@@ -11,6 +11,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
+class UTTDPrimaryDataAssets;
 
 UCLASS()
 class TIMETRAVELERSDILEMMA_API AMainCharacter : public ACharacter
@@ -45,13 +46,22 @@ public:
 	UInputAction* JumpAction;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	float MovementSpeed=100;
+	float MovementSpeed;
+	
+	
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data Assets")
+	TObjectPtr<UTTDPrimaryDataAssets> DataAssetInstance;
 	
 	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
 	void MoveForward(const FInputActionValue& Value);
 	void Jump() override;
+	void AppendDataAssets();
 
+private:
+	
 };

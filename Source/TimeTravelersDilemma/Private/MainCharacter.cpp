@@ -10,6 +10,7 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "TTDPrimaryDataAssets.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -25,7 +26,8 @@ AMainCharacter::AMainCharacter()
 
 	CameraComponent=CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
-
+	
+	
 	
 }
 
@@ -34,6 +36,10 @@ void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (IsValid(DataAssetInstance))
+	{
+		MovementSpeed = DataAssetInstance->CharacterSpeed;
+	}
 	//implement EnhancedInput
 	APlayerController* PlayerController = Cast<APlayerController>(Controller);
 	if (PlayerController)
@@ -68,6 +74,14 @@ void AMainCharacter::MoveForward(const FInputActionValue& Value)
 void AMainCharacter::Jump()
 {
 	Super::Jump();
+}
+
+void AMainCharacter::AppendDataAssets()
+{
+	if (DataAssetInstance)
+	{
+		//MovementSpeed = DataAssetClass->
+	}
 }
 
 // Called every frame
