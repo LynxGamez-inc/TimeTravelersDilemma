@@ -6,7 +6,6 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Components/InputComponent.h"
-//#include "InputActionValue.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -27,7 +26,8 @@ AMainCharacter::AMainCharacter()
 	CameraComponent=CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
 	
-	
+	HandAttachmentPoint = CreateDefaultSubobject<USceneComponent>(TEXT("HandAttachmentPoint"));
+	HandAttachmentPoint->SetupAttachment(GetRootComponent());
 	
 }
 
@@ -42,10 +42,11 @@ void AMainCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 	//implement EnhancedInput
-	const APlayerController* PlayerController = Cast<APlayerController>(Controller);
+	const TObjectPtr<APlayerController> PlayerController = Cast<APlayerController>(Controller);
 	if (PlayerController)
 	{
-		UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
+		
+		TObjectPtr<UEnhancedInputLocalPlayerSubsystem> Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
 		if (Subsystem)
 		{
 			Subsystem->AddMappingContext(InputMappingContext, 0);
@@ -92,11 +93,15 @@ void AMainCharacter::AppendDataAssets()
 	}
 }
 
-void AMainCharacter::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AMainCharacter::AttachLantern(AItemLantern* ItemLantern)
 {
-	
+	if (ItemLantern)
+	{
+		// Attach lantern to the hand attachment point
+		ItemLantern->AttachToComponent(HandAttachmentPoint, FAttachmentTransformRules::SnapToTargetIncludingScale);
+	}
 }
+
 
 // Called every frame
 void AMainCharacter::Tick(float DeltaTime)

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ItemLantern.h"
 #include "GameFramework/Character.h"
 #include "MainCharacter.generated.h"
 
@@ -27,6 +28,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
+	UFUNCTION(BlueprintCallable, Category = "Interaction")
+	void AttachLantern(AItemLantern* ItemLantern);
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UPaperSpriteComponent> SpriteComponent;
 
@@ -48,7 +52,9 @@ public:
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float MovementSpeed;
-	
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<USceneComponent> HandAttachmentPoint;
 	
 	
 protected:
@@ -62,11 +68,13 @@ protected:
 	
 	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
 	void MoveForward(const FInputActionValue& Value);
+	
 	virtual void Jump() override;
 	void AppendDataAssets();
 	
-	UFUNCTION(BlueprintCallable, Category = "Interaction")
-	void OnComponentBeginOverlap( UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
+	
+	
 
 private:
 	
