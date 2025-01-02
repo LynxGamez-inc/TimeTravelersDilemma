@@ -28,22 +28,23 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	UPaperSpriteComponent* SpriteComponent;
+	TObjectPtr<UPaperSpriteComponent> SpriteComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-	USpringArmComponent* SpringArmComponent;
-	
+	TObjectPtr<USpringArmComponent> SpringArmComponent;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-	UCameraComponent* CameraComponent;
+	TObjectPtr<UCameraComponent> CameraComponent;
+
+	// Enhanced Input
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
+	TObjectPtr<UInputMappingContext> InputMappingContext;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
-	UInputMappingContext* InputMappingContext;
+	TObjectPtr<UInputAction> MoveAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
-	UInputAction* MoveAction;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
-	UInputAction* JumpAction;
+	TObjectPtr<UInputAction> JumpAction;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float MovementSpeed;
@@ -53,13 +54,15 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnConstruction(const FTransform& Transform) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data Assets")
 	TObjectPtr<UDataAssets> SpeedDataAsset;
 	
 	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
 	void MoveForward(const FInputActionValue& Value);
-	void Jump() override;
+	virtual void Jump() override;
 	void AppendDataAssets();
 	
 	UFUNCTION(BlueprintCallable, Category = "Interaction")

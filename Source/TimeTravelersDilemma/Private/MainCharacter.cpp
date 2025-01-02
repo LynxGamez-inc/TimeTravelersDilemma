@@ -31,12 +31,16 @@ AMainCharacter::AMainCharacter()
 	
 }
 
-// Called when the game starts or when spawned
-void AMainCharacter::BeginPlay()
-{
-	Super::BeginPlay();
 
+void AMainCharacter::OnConstruction(const FTransform& Transform)
+{
+	Super::OnConstruction(Transform);
 	AppendDataAssets();
+}
+
+void AMainCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
 	//implement EnhancedInput
 	const APlayerController* PlayerController = Cast<APlayerController>(Controller);
 	if (PlayerController)
@@ -47,9 +51,16 @@ void AMainCharacter::BeginPlay()
 			Subsystem->AddMappingContext(InputMappingContext, 0);
 		}
 	}
+}
 
+// Called when the game starts or when spawned
+void AMainCharacter::BeginPlay()
+{
+	Super::BeginPlay();
 	
 }
+
+
 
 void AMainCharacter::MoveForward(const FInputActionValue& Value)
 {
