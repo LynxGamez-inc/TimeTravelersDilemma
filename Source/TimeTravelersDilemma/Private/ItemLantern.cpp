@@ -12,13 +12,11 @@
   
   BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
   RootComponent = BoxCollision;
+  BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AItemLantern::OnBeginOverlap);
   BoxCollision->SetGenerateOverlapEvents(true);
   
   SpriteComponent = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("Sprite"));
   SpriteComponent->SetupAttachment(GetRootComponent());
-  
-
-  
  
  }
 
@@ -26,6 +24,7 @@
                                    UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
  {
   Super::OnBeginOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
+  GEngine->AddOnScreenDebugMessage(0, 5, FColor::Red, "Overlapping Item Lantern");
   TObjectPtr<AMainCharacter> MainCharacter = Cast<AMainCharacter>(OtherActor);
   
   if (MainCharacter)
