@@ -17,4 +17,7 @@ class TIMETRAVELERSDILEMMA_API UDataAssets : public UPrimaryDataAsset
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float CharacterSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName ItemSocket;
 };

@@ -14,6 +14,7 @@ class UInputMappingContext;
 class UInputAction;
 class UDataAssets;
 
+
 UCLASS()
 class TIMETRAVELERSDILEMMA_API AMainCharacter : public ACharacter
 {
@@ -27,9 +28,6 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
-	UFUNCTION(BlueprintCallable, Category = "Interaction")
-	void AttachLantern(AItemLantern* ItemLantern);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UPaperSpriteComponent> SpriteComponent;
@@ -49,12 +47,17 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
 	TObjectPtr<UInputAction> JumpAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
+	TObjectPtr<UInputAction> EquipAction;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float MovementSpeed;
+	
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	TObjectPtr<USceneComponent> HandAttachmentPoint;
+
+	//Setters & Getters
+	FORCEINLINE void SetOverlappingItem(AItems* Item) {OverlappingItem = Item;}
 	
 	
 protected:
@@ -64,12 +67,14 @@ protected:
 	virtual void OnConstruction(const FTransform& Transform) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data Assets")
-	TObjectPtr<UDataAssets> SpeedDataAsset;
+	TObjectPtr<UDataAssets> CharacterConfig;
 	
 	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
 	void MoveForward(const FInputActionValue& Value);
 	
 	virtual void Jump() override;
+	void Equip();
+	
 	void AppendDataAssets();
 	
 	
@@ -77,5 +82,6 @@ protected:
 	
 
 private:
-	
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<AItems> OverlappingItem;
 };

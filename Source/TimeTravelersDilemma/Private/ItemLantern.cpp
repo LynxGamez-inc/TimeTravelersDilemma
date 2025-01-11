@@ -2,34 +2,56 @@
 
 
 #include "ItemLantern.h"
-#include "Components/BoxComponent.h"
 #include "PaperSpriteComponent.h"
 #include "MainCharacter.h"
+#include "Components/WidgetComponent.h"
 
 
  AItemLantern::AItemLantern()
  {
-  
-  BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
-  RootComponent = BoxCollision;
-  BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AItemLantern::OnBeginOverlap);
-  BoxCollision->SetGenerateOverlapEvents(true);
-  
   SpriteComponent = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("Sprite"));
   SpriteComponent->SetupAttachment(GetRootComponent());
  
  }
 
- void AItemLantern::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-                                   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+ void AItemLantern::BeginPlay()
  {
-  Super::OnBeginOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-  GEngine->AddOnScreenDebugMessage(0, 5, FColor::Red, "Overlapping Item Lantern");
-  TObjectPtr<AMainCharacter> MainCharacter = Cast<AMainCharacter>(OtherActor);
-  
-  if (MainCharacter)
+   Super::BeginPlay();
+
+  EquipWidget->SetVisibility(false);
+ }
+
+
+ void AItemLantern::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent,
+                                   AActor* OtherActor,
+                                   UPrimitiveComponent* OtherComp,
+                                   int32 OtherBodyIndex,
+                                   bool bFromSweep,
+                                   const FHitResult& SweepResult)
+ {
+    Super::OnBeginOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
+    GEngine->AddOnScreenDebugMessage(0, 5, FColor::Red, "Overlapping Item Lantern");
+    TObjectPtr<AMainCharacter> MainCharacter = Cast<AMainCharacter>(OtherActor);
+    if (IsValid(MainCharacter))
+    {
+      MainCharacter->SetOverlappingItem(this);
+      EquipWidget->SetVisibility(true);
+    }
+ }
+
+
+ void AItemLantern::OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+  UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+ {
+    Super::OnEndOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex);
+
+    TObjectPtr<AMainCharacter> MainCharacter = Cast<AMainCharacter>(OtherActor);
+    
+  if (IsValid(MainCharacter))
   {
-   // Attach to the character's hand
-   MainCharacter->AttachLantern(this);
+   MainCharacter->SetOverlappingItem(nullptr);
+   EquipWidget->SetVisibility(false);
   }
  }
+
+

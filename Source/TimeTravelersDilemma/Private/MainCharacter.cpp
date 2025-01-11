@@ -10,6 +10,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "DataAssets.h"
+#include "MovieSceneTracksComponentTypes.h"
+
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -26,8 +28,6 @@ AMainCharacter::AMainCharacter()
 	CameraComponent=CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
 	
-	HandAttachmentPoint = CreateDefaultSubobject<USceneComponent>(TEXT("HandAttachmentPoint"));
-	HandAttachmentPoint->SetupAttachment(GetRootComponent());
 	
 }
 
@@ -58,7 +58,12 @@ void AMainCharacter::PossessedBy(AController* NewController)
 void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	if (!IsValid(CharacterConfig))
+	{
+		UE_LOG(LogTemp, Error, TEXT("CharacterConfig is not assigned in Blueprint for Character: %s. "
+							  "Please assign it in the Blueprint."), *GetName());
+		return;
+	}
 }
 
 
@@ -85,22 +90,27 @@ void AMainCharacter::Jump()
 	Super::Jump();
 }
 
-void AMainCharacter::AppendDataAssets()
+void AMainCharacter::Equip()
 {
-	if (IsValid(SpeedDataAsset))
+	if (IsValid(OverlappingItem))
 	{
-		MovementSpeed = SpeedDataAsset->CharacterSpeed;
+		if (SpriteComponent->DoesSocketExist(CharacterConfig->ItemSocket))
+		{
+			OverlappingItem->AttachToComponent(SpriteComponent,FAttachmentTransformRules::SnapToTargetIncludingScale,CharacterConfig->ItemSocket);
+		}
+		
+		
 	}
 }
 
-void AMainCharacter::AttachLantern(AItemLantern* ItemLantern)
+void AMainCharacter::AppendDataAssets()
 {
-	if (ItemLantern)
+	if (IsValid(CharacterConfig))
 	{
-		// Attach lantern to the hand attachment point
-		ItemLantern->AttachToComponent(HandAttachmentPoint, FAttachmentTransformRules::SnapToTargetIncludingScale);
+		MovementSpeed = CharacterConfig->CharacterSpeed;
 	}
 }
+
 
 
 // Called every frame
@@ -120,6 +130,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	{
 		EnhancedInputComponent->BindAction(MoveAction,ETriggerEvent::Triggered,this,&AMainCharacter::MoveForward);
 		EnhancedInputComponent->BindAction(JumpAction,ETriggerEvent::Triggered,this,&AMainCharacter::Jump);
+		EnhancedInputComponent->BindAction(EquipAction,ETriggerEvent::Triggered,this,&AMainCharacter::Equip);
 	}
 
 }
