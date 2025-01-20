@@ -30,7 +30,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	
+	void HideEquipWidget();
 	
 	UFUNCTION(BlueprintCallable)
 	virtual void OnBeginOverlap( UPrimitiveComponent* OverlappedComponent,

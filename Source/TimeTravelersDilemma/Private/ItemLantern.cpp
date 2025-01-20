@@ -34,8 +34,8 @@
     TObjectPtr<AMainCharacter> MainCharacter = Cast<AMainCharacter>(OtherActor);
     if (IsValid(MainCharacter))
     {
-      MainCharacter->SetOverlappingItem(this);
-      EquipWidget->SetVisibility(true);
+     MainCharacter->SetOverlappingItem(this);
+     EquipWidget->GetWidget()->SetVisibility(ESlateVisibility::Visible);
     }
  }
 
@@ -47,11 +47,11 @@
 
     TObjectPtr<AMainCharacter> MainCharacter = Cast<AMainCharacter>(OtherActor);
     
-  if (IsValid(MainCharacter))
-  {
-   MainCharacter->SetOverlappingItem(nullptr);
-   EquipWidget->SetVisibility(false);
-  }
+    if (IsValid(MainCharacter))
+    {
+      MainCharacter->SetOverlappingItem(nullptr);
+      EquipWidget->GetWidget()->SetVisibility(ESlateVisibility::Collapsed);
+    }
  }
 
 

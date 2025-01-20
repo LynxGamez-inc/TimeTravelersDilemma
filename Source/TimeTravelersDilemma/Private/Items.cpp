@@ -37,8 +37,13 @@ void AItems::Tick(float DeltaTime)
 
 }
 
+void AItems::HideEquipWidget()
+{
+	EquipWidget->GetWidget()->SetVisibility(ESlateVisibility::Collapsed);
+}
+
 void AItems::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+                            UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	
 }

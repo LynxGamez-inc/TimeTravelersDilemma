@@ -96,10 +96,9 @@ void AMainCharacter::Equip()
 	{
 		if (SpriteComponent->DoesSocketExist(CharacterConfig->ItemSocket))
 		{
-			OverlappingItem->AttachToComponent(SpriteComponent,FAttachmentTransformRules::SnapToTargetIncludingScale,CharacterConfig->ItemSocket);
+			OverlappingItem->AttachToComponent(SpriteComponent,FAttachmentTransformRules::SnapToTargetNotIncludingScale,CharacterConfig->ItemSocket);
+			OverlappingItem->HideEquipWidget();
 		}
-		
-		
 	}
 }
 

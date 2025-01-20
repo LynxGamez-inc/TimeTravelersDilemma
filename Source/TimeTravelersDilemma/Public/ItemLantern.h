@@ -25,6 +25,7 @@ class TIMETRAVELERSDILEMMA_API AItemLantern : public AItems
 
 
 	
+	
 	virtual void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent,
 		AActor* OtherActor,
 		UPrimitiveComponent* OtherComp,
