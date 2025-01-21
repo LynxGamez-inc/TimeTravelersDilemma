@@ -98,8 +98,11 @@ void AMainCharacter::Equip()
 		{
 			OverlappingItem->AttachToComponent(SpriteComponent,FAttachmentTransformRules::SnapToTargetNotIncludingScale,CharacterConfig->ItemSocket);
 			OverlappingItem->HideEquipWidget();
+			LanternEquipped=true;
 		}
 	}
+	
+	ItemLetterInstance->CanBeSeen(true);
 }
 
 void AMainCharacter::AppendDataAssets()

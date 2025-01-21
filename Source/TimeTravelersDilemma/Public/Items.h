@@ -18,6 +18,9 @@ class TIMETRAVELERSDILEMMA_API AItems : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AItems();
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Components")
+	TObjectPtr<UBoxComponent> BoxCollision;
 
 protected:
 	// Called when the game starts or when spawned
@@ -47,8 +50,7 @@ public:
 		int32 OtherBodyIndex);
 
 private:
-	UPROPERTY(EditDefaultsOnly, Category = "Components")
-	TObjectPtr<UBoxComponent> BoxCollision;
+	
 
 	
 };

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ItemLantern.h"
+#include "ItemLetter.h"
 #include "GameFramework/Character.h"
 #include "MainCharacter.generated.h"
 
@@ -53,11 +54,15 @@ public:
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float MovementSpeed;
+
+	//Boolians
+	bool LanternEquipped=false;
 	
 
 
 	//Setters & Getters
 	FORCEINLINE void SetOverlappingItem(AItems* Item) {OverlappingItem = Item;}
+	FORCEINLINE void SetLetterVisibility(AItemLetter* bIsVisible){}
 	
 	
 protected:
@@ -84,4 +89,7 @@ protected:
 private:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<AItems> OverlappingItem;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<AItemLetter> ItemLetterInstance;
 };
