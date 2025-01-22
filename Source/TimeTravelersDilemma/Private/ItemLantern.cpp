@@ -30,7 +30,6 @@
                                    const FHitResult& SweepResult)
  {
     Super::OnBeginOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-    GEngine->AddOnScreenDebugMessage(0, 5, FColor::Red, "Overlapping Item Lantern");
     TObjectPtr<AMainCharacter> MainCharacter = Cast<AMainCharacter>(OtherActor);
     if (IsValid(MainCharacter))
     {

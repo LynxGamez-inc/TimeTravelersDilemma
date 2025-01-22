@@ -56,7 +56,7 @@ public:
 	float MovementSpeed;
 
 	//Boolians
-	bool LanternEquipped=false;
+	bool bIsLanternEquipped=false;
 	
 
 
@@ -82,7 +82,7 @@ protected:
 	
 	void AppendDataAssets();
 	
-	
+	bool LanternState(bool bIsLantern);
 	
 	
 
