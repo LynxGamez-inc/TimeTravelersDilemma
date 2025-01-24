@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ItemLantern.h"
+#include "ItemLetter.h"
 #include "GameFramework/Character.h"
 #include "MainCharacter.generated.h"
 
@@ -12,6 +14,7 @@ class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
 class UDataAssets;
+
 
 UCLASS()
 class TIMETRAVELERSDILEMMA_API AMainCharacter : public ACharacter
@@ -26,7 +29,7 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UPaperSpriteComponent> SpriteComponent;
 
@@ -45,10 +48,22 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
 	TObjectPtr<UInputAction> JumpAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
+	TObjectPtr<UInputAction> EquipAction;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float MovementSpeed;
+
+	//Boolians
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bIsLanternEquipped=false;
 	
+
+
+	//Setters & Getters
+	FORCEINLINE void SetOverlappingItem(AItems* Item) {OverlappingItem = Item;}
+	FORCEINLINE void SetLetterVisibility(AItemLetter* bIsVisible){}
 	
 	
 protected:
@@ -58,16 +73,32 @@ protected:
 	virtual void OnConstruction(const FTransform& Transform) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data Assets")
-	TObjectPtr<UDataAssets> SpeedDataAsset;
+	TObjectPtr<UDataAssets> CharacterConfig;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<APlayerController> PlayerController;
 	
 	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
 	void MoveForward(const FInputActionValue& Value);
-	virtual void Jump() override;
-	void AppendDataAssets();
 	
-	UFUNCTION(BlueprintCallable, Category = "Interaction")
-	void OnComponentBeginOverlap( UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	virtual void Jump() override;
+	void Equip();
+	
+	void AppendDataAssets();
+
+	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
+	void DisableIMC();
+	
+	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
+	void EnableIMC();
+
+	
+	
 
 private:
-	
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<AItems> OverlappingItem;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<AItemLetter> ItemLetterInstance;
 };

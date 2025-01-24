@@ -8,7 +8,7 @@ public class TimeTravelersDilemma : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","EnhancedInput","Paper2D" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore","EnhancedInput","Paper2D","UMG" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
