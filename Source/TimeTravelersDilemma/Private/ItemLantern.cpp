@@ -11,16 +11,13 @@
  {
   SpriteComponent = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("Sprite"));
   SpriteComponent->SetupAttachment(GetRootComponent());
- 
  }
 
  void AItemLantern::BeginPlay()
  {
    Super::BeginPlay();
-
-  EquipWidget->SetVisibility(false);
+   EquipWidget->SetVisibility(false);
  }
-
 
  void AItemLantern::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent,
                                    AActor* OtherActor,
