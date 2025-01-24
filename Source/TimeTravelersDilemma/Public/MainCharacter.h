@@ -82,8 +82,13 @@ protected:
 	void Equip();
 	
 	void AppendDataAssets();
+
+	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
+	void DisableIMC();
 	
-	bool LanternState(bool bIsLantern);
+	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
+	void EnableIMC();
+
 	
 	
 

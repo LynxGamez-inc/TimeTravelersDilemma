@@ -111,6 +111,31 @@ void AMainCharacter::AppendDataAssets()
 	}
 }
 
+void AMainCharacter::DisableIMC()
+{
+	const TObjectPtr<APlayerController> PlayerController = Cast<APlayerController>(Controller);
+	if (PlayerController)
+	{
+		TObjectPtr<UEnhancedInputLocalPlayerSubsystem> Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
+		if (Subsystem && InputMappingContext)
+		{
+			Subsystem->RemoveMappingContext(InputMappingContext);
+		}
+	}
+}
+
+void AMainCharacter::EnableIMC()
+{
+	const TObjectPtr<APlayerController> PlayerController = Cast<APlayerController>(Controller);
+	if (PlayerController)
+	{
+		TObjectPtr<UEnhancedInputLocalPlayerSubsystem> Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
+		if (Subsystem && InputMappingContext)
+		{
+			Subsystem->AddMappingContext(InputMappingContext, 0); // Priority 0 as before
+		}
+	}
+}
 
 
 // Called every frame
