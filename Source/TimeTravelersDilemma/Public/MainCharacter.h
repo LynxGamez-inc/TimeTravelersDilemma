@@ -74,6 +74,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data Assets")
 	TObjectPtr<UDataAssets> CharacterConfig;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<APlayerController> PlayerController;
 	
 	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
 	void MoveForward(const FInputActionValue& Value);

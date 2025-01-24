@@ -10,7 +10,6 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "DataAssets.h"
-#include "MovieSceneTracksComponentTypes.h"
 
 
 // Sets default values
@@ -27,8 +26,6 @@ AMainCharacter::AMainCharacter()
 
 	CameraComponent=CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
-	
-	
 }
 
 
@@ -42,12 +39,12 @@ void AMainCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 	//implement EnhancedInput
-	const TObjectPtr<APlayerController> PlayerController = Cast<APlayerController>(Controller);
+	PlayerController = Cast<APlayerController>(Controller);
 	if (PlayerController)
 	{
 		
 		TObjectPtr<UEnhancedInputLocalPlayerSubsystem> Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
-		if (Subsystem)
+		if (IsValid(Subsystem))
 		{
 			Subsystem->AddMappingContext(InputMappingContext, 0);
 		}
@@ -74,12 +71,12 @@ void AMainCharacter::MoveForward(const FInputActionValue& Value)
 	
 	if (abs(MoveActionValue.X)>0.0f)
 	{
-		float DeltaTime = GetWorld()->GetDeltaSeconds();
+		const float DeltaTime = GetWorld()->GetDeltaSeconds();
 		
-		FVector CurrentLocation=GetActorLocation();
-		FVector DistanceToMove=GetActorForwardVector()*MovementSpeed*MoveActionValue.X*DeltaTime;
+		const FVector CurrentLocation=GetActorLocation();
+		const FVector DistanceToMove=GetActorForwardVector()*MovementSpeed*MoveActionValue.X*DeltaTime;
 		
-		FVector NewLocation= CurrentLocation+DistanceToMove;
+		const FVector NewLocation= CurrentLocation+DistanceToMove;
 		SetActorLocation(NewLocation);
 	}
 	
@@ -113,8 +110,7 @@ void AMainCharacter::AppendDataAssets()
 
 void AMainCharacter::DisableIMC()
 {
-	const TObjectPtr<APlayerController> PlayerController = Cast<APlayerController>(Controller);
-	if (PlayerController)
+	if (IsValid(PlayerController))
 	{
 		TObjectPtr<UEnhancedInputLocalPlayerSubsystem> Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
 		if (Subsystem && InputMappingContext)
@@ -126,8 +122,7 @@ void AMainCharacter::DisableIMC()
 
 void AMainCharacter::EnableIMC()
 {
-	const TObjectPtr<APlayerController> PlayerController = Cast<APlayerController>(Controller);
-	if (PlayerController)
+	if (IsValid(PlayerController))
 	{
 		TObjectPtr<UEnhancedInputLocalPlayerSubsystem> Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
 		if (Subsystem && InputMappingContext)
@@ -151,7 +146,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
-	if (EnhancedInputComponent)
+	if (IsValid(EnhancedInputComponent))
 	{
 		EnhancedInputComponent->BindAction(MoveAction,ETriggerEvent::Triggered,this,&AMainCharacter::MoveForward);
 		EnhancedInputComponent->BindAction(JumpAction,ETriggerEvent::Triggered,this,&AMainCharacter::Jump);
