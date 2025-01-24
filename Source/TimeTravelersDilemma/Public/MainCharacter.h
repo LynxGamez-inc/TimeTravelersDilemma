@@ -56,6 +56,7 @@ public:
 	float MovementSpeed;
 
 	//Boolians
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsLanternEquipped=false;
 	
 
