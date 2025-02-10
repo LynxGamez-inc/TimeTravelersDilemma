@@ -87,11 +87,12 @@ void AMainCharacter::PauseMenu()
 {
 	if (IsValid(PauseWidgetClass))
 	{
-		PauseWidget = CreateWidget<UUserWidget>(GetWorld(), PauseWidgetClass);
+		PauseWidget = CreateWidget<UUserWidge
 	}
 	if (IsValid(PauseWidget))
 	{
 		PauseWidget->AddToViewport();
+		DisableIMC();
 	}
 }
 

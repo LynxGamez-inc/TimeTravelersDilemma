@@ -78,6 +78,11 @@ public:
 	FORCEINLINE void SetOverlappingItem(AItems* Item) {OverlappingItem = Item;}
 	FORCEINLINE void SetLetterVisibility(AItemLetter* bIsVisible){}
 	
+	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
+	void DisableIMC();
+	
+	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
+	void EnableIMC();
 	
 protected:
 	// Called when the game starts or when spawned
@@ -102,11 +107,7 @@ protected:
 	
 	void AppendDataAssets();
 
-	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
-	void DisableIMC();
 	
-	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
-	void EnableIMC();
 
 	
 	
