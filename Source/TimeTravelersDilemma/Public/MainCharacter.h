@@ -14,6 +14,8 @@ class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
 class UDataAssets;
+class UUserWidget;
+
 
 
 UCLASS()
@@ -39,6 +41,14 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	TObjectPtr<UCameraComponent> CameraComponent;
 
+	//user widget refernce
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	TSubclassOf<UUserWidget> PauseWidgetClass;
+
+	UPROPERTY()
+	UUserWidget* PauseWidget;
+
+	
 	// Enhanced Input
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
 	TObjectPtr<UInputMappingContext> InputMappingContext;
@@ -51,6 +61,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
 	TObjectPtr<UInputAction> EquipAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
+	TObjectPtr<UInputAction> PauseAction;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float MovementSpeed;
@@ -80,6 +93,9 @@ protected:
 	
 	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
 	void MoveForward(const FInputActionValue& Value);
+
+	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
+	void PauseMenu();
 	
 	virtual void Jump() override;
 	void Equip();

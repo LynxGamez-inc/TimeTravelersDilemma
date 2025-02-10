@@ -9,6 +9,7 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Blueprint/UserWidget.h"
 #include "DataAssets.h"
 
 
@@ -82,6 +83,18 @@ void AMainCharacter::MoveForward(const FInputActionValue& Value)
 	
 }
 
+void AMainCharacter::PauseMenu()
+{
+	if (IsValid(PauseWidgetClass))
+	{
+		PauseWidget = CreateWidget<UUserWidget>(GetWorld(), PauseWidgetClass);
+	}
+	if (IsValid(PauseWidget))
+	{
+		PauseWidget->AddToViewport();
+	}
+}
+
 void AMainCharacter::Jump()
 {
 	Super::Jump();
@@ -151,6 +164,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		EnhancedInputComponent->BindAction(MoveAction,ETriggerEvent::Triggered,this,&AMainCharacter::MoveForward);
 		EnhancedInputComponent->BindAction(JumpAction,ETriggerEvent::Triggered,this,&AMainCharacter::Jump);
 		EnhancedInputComponent->BindAction(EquipAction,ETriggerEvent::Triggered,this,&AMainCharacter::Equip);
+		EnhancedInputComponent->BindAction(PauseAction,ETriggerEvent::Triggered,this,&AMainCharacter::PauseMenu);
 	}
 
 }
