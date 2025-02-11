@@ -62,6 +62,17 @@ void AMainCharacter::BeginPlay()
 							  "Please assign it in the Blueprint."), *GetName());
 		return;
 	}
+
+	//create pause widget
+	if (IsValid(PauseWidgetClass))
+	{
+		PauseWidget = CreateWidget<UUserWidget>(GetWorld(), PauseWidgetClass);
+	}
+	if (IsValid(PauseWidget))
+	{
+		PauseWidget->AddToViewport();
+		PauseWidget->SetVisibility(ESlateVisibility::Collapsed);
+	}
 }
 
 
@@ -85,15 +96,9 @@ void AMainCharacter::MoveForward(const FInputActionValue& Value)
 
 void AMainCharacter::PauseMenu()
 {
-	if (IsValid(PauseWidgetClass))
-	{
-		PauseWidget = CreateWidget<UUserWidge
-	}
-	if (IsValid(PauseWidget))
-	{
-		PauseWidget->AddToViewport();
-		DisableIMC();
-	}
+
+	PauseWidget->SetVisibility(ESlateVisibility::Visible);
+	DisableIMC();
 }
 
 void AMainCharacter::Jump()
