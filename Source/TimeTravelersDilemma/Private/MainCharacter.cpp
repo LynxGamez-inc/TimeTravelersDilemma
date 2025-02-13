@@ -99,6 +99,17 @@ void AMainCharacter::PauseMenu()
 
 	PauseWidget->SetVisibility(ESlateVisibility::Visible);
 	DisableIMC();
+	if (PlayerController)
+	{
+		// Set input mode to UI only
+		FInputModeUIOnly InputMode;
+		InputMode.SetWidgetToFocus(PauseWidget->TakeWidget());
+		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+		PlayerController->SetInputMode(InputMode);
+
+		// Show mouse cursor
+		PlayerController->bShowMouseCursor = true;
+	}
 }
 
 void AMainCharacter::Jump()
