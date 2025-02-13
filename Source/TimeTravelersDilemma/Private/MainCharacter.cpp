@@ -96,7 +96,7 @@ void AMainCharacter::MoveForward(const FInputActionValue& Value)
 
 void AMainCharacter::PauseMenu()
 {
-
+ 
 	PauseWidget->SetVisibility(ESlateVisibility::Visible);
 	DisableIMC();
 	if (PlayerController)
