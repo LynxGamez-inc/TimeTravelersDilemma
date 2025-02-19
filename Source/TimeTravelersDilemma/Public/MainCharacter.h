@@ -82,7 +82,13 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
 	void EnableIMC();
+
+	//FlipBooks
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Flipbooks")
+	UPaperFlipbook* FB_Idle;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Flipbooks")
+	UPaperFlipbook* FB_WalkForward;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

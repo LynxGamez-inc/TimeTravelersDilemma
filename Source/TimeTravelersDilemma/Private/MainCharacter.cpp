@@ -88,6 +88,7 @@ void AMainCharacter::MoveForward(const FInputActionValue& Value)
 		
 		const FVector NewLocation= CurrentLocation+DistanceToMove;
 		SetActorLocation(NewLocation);
+		GetSprite()->SetFlipbook(FB_WalkForward);
 		
 		if (MoveActionValue.X < 0.0f)
 		{
