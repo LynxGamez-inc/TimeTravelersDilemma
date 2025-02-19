@@ -2,7 +2,7 @@
 
 
 #include "MainCharacter.h"
-#include "PaperSpriteComponent.h"
+#include "PaperFlipbookComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Components/InputComponent.h"
@@ -19,8 +19,6 @@ AMainCharacter::AMainCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	SpriteComponent = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("SpriteComponent"));
-	SpriteComponent->SetupAttachment(GetRootComponent());
 
 	SpringArmComponent=CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
 	SpringArmComponent->SetupAttachment(GetRootComponent());
@@ -90,7 +88,19 @@ void AMainCharacter::MoveForward(const FInputActionValue& Value)
 		
 		const FVector NewLocation= CurrentLocation+DistanceToMove;
 		SetActorLocation(NewLocation);
+		
+		if (MoveActionValue.X < 0.0f)
+		{
+			GetSprite()->SetRelativeRotation(FRotator(0.0f, 180.0f, 0.0f));
+			
+		}
+		else if (MoveActionValue.X > 0.0f)
+		{
+			GetSprite()->SetRelativeRotation(FRotator(0.0f, 0.0f, 0.0f));
+		}
+	
 	}
+	
 	
 }
 
@@ -121,9 +131,9 @@ void AMainCharacter::Equip()
 {
 	if (IsValid(OverlappingItem))
 	{
-		if (SpriteComponent->DoesSocketExist(CharacterConfig->ItemSocket))
+		if (GetSprite()->DoesSocketExist(CharacterConfig->ItemSocket))
 		{
-			OverlappingItem->AttachToComponent(SpriteComponent,FAttachmentTransformRules::SnapToTargetNotIncludingScale,CharacterConfig->ItemSocket);
+			OverlappingItem->AttachToComponent(GetSprite(),FAttachmentTransformRules::SnapToTargetNotIncludingScale,CharacterConfig->ItemSocket);
 			OverlappingItem->HideEquipWidget();
 			bIsLanternEquipped=true;
 		}

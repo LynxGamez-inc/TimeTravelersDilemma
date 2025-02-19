@@ -5,8 +5,10 @@
 #include "CoreMinimal.h"
 #include "ItemLantern.h"
 #include "ItemLetter.h"
-#include "GameFramework/Character.h"
+#include  "PaperCharacter.h"
+#include "PaperFlipbookComponent.h"
 #include "MainCharacter.generated.h"
+
 
 class UPaperSpriteComponent;
 class USpringArmComponent;
@@ -19,7 +21,7 @@ class UUserWidget;
 
 
 UCLASS()
-class TIMETRAVELERSDILEMMA_API AMainCharacter : public ACharacter
+class TIMETRAVELERSDILEMMA_API AMainCharacter : public APaperCharacter
 {
 	GENERATED_BODY()
 
@@ -31,10 +33,7 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	TObjectPtr<UPaperSpriteComponent> SpriteComponent;
-
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	TObjectPtr<USpringArmComponent> SpringArmComponent;
 
