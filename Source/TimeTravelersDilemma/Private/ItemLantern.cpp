@@ -3,7 +3,7 @@
 
 #include "ItemLantern.h"
 #include "PaperSpriteComponent.h"
-#include "MainCharacter.h"
+#include "TTCharacter/MainCharacter.h"
 #include "Components/WidgetComponent.h"
 
 

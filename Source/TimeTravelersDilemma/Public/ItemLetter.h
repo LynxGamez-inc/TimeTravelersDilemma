@@ -18,6 +18,7 @@ class TIMETRAVELERSDILEMMA_API AItemLetter : public AItems
 
 public:
 	AItemLetter();
+	virtual void BeginPlay() override;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UPaperSpriteComponent> LetterSprite;

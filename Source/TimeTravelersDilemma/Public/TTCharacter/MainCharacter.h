@@ -2,14 +2,14 @@
 
 #pragma once
 
+//#include "TTCharacter/MainCharacter.h"
 #include "CoreMinimal.h"
-#include "ItemLantern.h"
-#include "ItemLetter.h"
 #include  "PaperCharacter.h"
 #include "PaperFlipbookComponent.h"
 #include "MainCharacter.generated.h"
 
 
+class AItems;
 class UPaperSpriteComponent;
 class USpringArmComponent;
 class UCameraComponent;
@@ -17,8 +17,17 @@ class UInputMappingContext;
 class UInputAction;
 class UDataAssets;
 class UUserWidget;
+class AItemLetter;
 
 
+//Enums
+UENUM(BlueprintType)
+enum class ECharacterState : uint8
+{
+	ECS_Idle UMETA(DisplayName = "Idle"),
+	ECS_Walk UMETA(DisplayName = "Walk"),
+	ECS_Jump UMETA(DisplayName = "Jump")
+};
 
 UCLASS()
 class TIMETRAVELERSDILEMMA_API AMainCharacter : public APaperCharacter
@@ -34,34 +43,34 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "TimerTraverler|Components")
 	TObjectPtr<USpringArmComponent> SpringArmComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "TimerTraverler|Components")
 	TObjectPtr<UCameraComponent> CameraComponent;
 
-	//user widget refernce
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	//user widget reference
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TimerTraverler|UI")
 	TSubclassOf<UUserWidget> PauseWidgetClass;
 
 	UPROPERTY()
-	UUserWidget* PauseWidget;
+	TObjectPtr<UUserWidget> PauseWidget;
 
 	
 	// Enhanced Input
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TimerTraverler|EnhancedInput")
 	TObjectPtr<UInputMappingContext> InputMappingContext;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TimerTraverler|EnhancedInput")
 	TObjectPtr<UInputAction> MoveAction;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TimerTraverler|EnhancedInput")
 	TObjectPtr<UInputAction> JumpAction;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TimerTraverler|EnhancedInput")
 	TObjectPtr<UInputAction> EquipAction;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnhancedInput")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TimerTraverler|EnhancedInput")
 	TObjectPtr<UInputAction> PauseAction;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
@@ -70,41 +79,49 @@ public:
 	//Boolians
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsLanternEquipped=false;
-	
 
 
 	//Setters & Getters
 	FORCEINLINE void SetOverlappingItem(AItems* Item) {OverlappingItem = Item;}
 	FORCEINLINE void SetLetterVisibility(AItemLetter* bIsVisible){}
 	
-	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
+	UFUNCTION(BlueprintCallable, Category = "TimerTraverler|Enhanced Input")
 	void DisableIMC();
 	
-	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
+	UFUNCTION(BlueprintCallable, Category = "TimerTraverler|Enhanced Input")
 	void EnableIMC();
+	
+	//states
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TimerTraverler|Animation")
+	ECharacterState CurrentState;
 
 	//FlipBooks
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Flipbooks")
-	UPaperFlipbook* FB_Idle;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TimerTraverler|Flipbooks")
+	TObjectPtr<UPaperFlipbook> FB_Idle;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Flipbooks")
-	UPaperFlipbook* FB_WalkForward;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TimerTraverler|Flipbooks")
+	TObjectPtr<UPaperFlipbook> FB_WalkForward;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TimerTraverler|Flipbooks")
+	TObjectPtr<UPaperFlipbook> FB_Jump;
+	
 protected:
+	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnConstruction(const FTransform& Transform) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data Assets")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TimerTraverler|Data Assets")
 	TObjectPtr<UDataAssets> CharacterConfig;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<APlayerController> PlayerController;
 	
-	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
+	UFUNCTION(BlueprintCallable, Category = "TimerTraverler|Enhanced Input")
 	void MoveForward(const FInputActionValue& Value);
 
-	UFUNCTION(BlueprintCallable, Category = "Enhanced Input")
+	UFUNCTION(BlueprintCallable, Category = "TimerTraverler|Enhanced Input")
 	void PauseMenu();
 	
 	virtual void Jump() override;
@@ -112,10 +129,7 @@ protected:
 	
 	void AppendDataAssets();
 
-	
-
-	
-	
+	void AnimationUpdate();
 
 private:
 	UPROPERTY(EditAnywhere)

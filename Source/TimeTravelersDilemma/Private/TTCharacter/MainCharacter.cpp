@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "MainCharacter.h"
+#include "TTCharacter/MainCharacter.h"
 #include "PaperFlipbookComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
@@ -9,8 +9,9 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "ItemLetter.h"
 #include "Blueprint/UserWidget.h"
-#include "DataAssets.h"
+#include "TTCharacter/DataAssets.h"
 
 
 // Sets default values
@@ -32,6 +33,7 @@ void AMainCharacter::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 	AppendDataAssets();
+	
 }
 
 void AMainCharacter::PossessedBy(AController* NewController)
@@ -77,6 +79,7 @@ void AMainCharacter::BeginPlay()
 
 void AMainCharacter::MoveForward(const FInputActionValue& Value)
 {
+	CurrentState=ECharacterState::ECS_Walk;
 	FVector2d MoveActionValue=Value.Get<FVector2d>();
 	
 	if (abs(MoveActionValue.X)>0.0f)
@@ -88,7 +91,7 @@ void AMainCharacter::MoveForward(const FInputActionValue& Value)
 		
 		const FVector NewLocation= CurrentLocation+DistanceToMove;
 		SetActorLocation(NewLocation);
-		GetSprite()->SetFlipbook(FB_WalkForward);
+		
 		
 		if (MoveActionValue.X < 0.0f)
 		{
@@ -99,7 +102,9 @@ void AMainCharacter::MoveForward(const FInputActionValue& Value)
 		{
 			GetSprite()->SetRelativeRotation(FRotator(0.0f, 0.0f, 0.0f));
 		}
-	
+		
+
+		
 	}
 	
 	
@@ -147,6 +152,34 @@ void AMainCharacter::AppendDataAssets()
 	{
 		MovementSpeed = CharacterConfig->CharacterSpeed;
 	}
+}
+
+void AMainCharacter::AnimationUpdate()
+{
+	switch (CurrentState)
+	{
+	case ECharacterState::ECS_Idle:
+		if (GetSprite()->GetFlipbook()!=FB_Idle)
+		{
+			GetSprite()->SetFlipbook(FB_Idle);
+		}
+		break;
+		
+	case ECharacterState::ECS_Walk:
+		if (GetSprite()->GetFlipbook()!=FB_WalkForward)
+		{
+			GetSprite()->SetFlipbook(FB_WalkForward);
+		}
+		break;
+		
+	case ECharacterState::ECS_Jump:
+		if (GetSprite()->GetFlipbook()!=FB_Jump)
+		{
+			GetSprite()->SetFlipbook(FB_Jump);
+		}
+		break;
+	}
+	
 }
 
 void AMainCharacter::DisableIMC()

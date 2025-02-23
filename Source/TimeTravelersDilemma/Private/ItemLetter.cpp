@@ -2,7 +2,7 @@
 
 
 #include "ItemLetter.h"
-#include "MainCharacter.h"
+#include "TTCharacter/MainCharacter.h"
 #include "PaperSpriteComponent.h"
 #include "Components/BoxComponent.h"
 
@@ -17,9 +17,15 @@ AItemLetter::AItemLetter()
 	VisibilityCollision->OnComponentBeginOverlap.AddDynamic(this, &AItemLetter::OnVisibilityOverlap);
 	VisibilityCollision->SetGenerateOverlapEvents(true);
 
-	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AItemLetter::OnBeginOverlap);
+	
 
 	LetterSprite->SetVisibility(false);
+}
+
+void AItemLetter::BeginPlay()
+{
+	Super::BeginPlay();
+	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AItemLetter::OnBeginOverlap);
 }
 
 //sets letter to be visible
