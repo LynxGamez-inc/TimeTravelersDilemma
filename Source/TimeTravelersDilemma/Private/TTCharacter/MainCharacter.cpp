@@ -92,22 +92,15 @@ void AMainCharacter::MoveForward(const FInputActionValue& Value)
 		const FVector NewLocation= CurrentLocation+DistanceToMove;
 		SetActorLocation(NewLocation);
 		
-		
 		if (MoveActionValue.X < 0.0f)
 		{
 			GetSprite()->SetRelativeRotation(FRotator(0.0f, 180.0f, 0.0f));
-			
 		}
 		else if (MoveActionValue.X > 0.0f)
 		{
 			GetSprite()->SetRelativeRotation(FRotator(0.0f, 0.0f, 0.0f));
 		}
-		
-
-		
 	}
-	
-	
 }
 
 void AMainCharacter::PauseMenu()
@@ -179,7 +172,6 @@ void AMainCharacter::AnimationUpdate()
 		}
 		break;
 	}
-	
 }
 
 void AMainCharacter::DisableIMC()
@@ -206,15 +198,11 @@ void AMainCharacter::EnableIMC()
 	}
 }
 
-
-// Called every frame
 void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
 
-
-// Called to bind functionality to input
 void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);

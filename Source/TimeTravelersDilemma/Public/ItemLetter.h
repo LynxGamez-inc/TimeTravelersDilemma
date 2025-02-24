@@ -20,10 +20,10 @@ public:
 	AItemLetter();
 	virtual void BeginPlay() override;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TimeTraveler|Components")
 	TObjectPtr<UPaperSpriteComponent> LetterSprite;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Components")
+	UPROPERTY(EditDefaultsOnly, Category = "TimeTraveler|Components")
 	TObjectPtr<UBoxComponent> VisibilityCollision;
 
 	void CanBeSeen(bool bIsVisible);
