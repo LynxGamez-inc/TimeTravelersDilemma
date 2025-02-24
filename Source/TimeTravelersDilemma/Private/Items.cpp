@@ -17,10 +17,10 @@ AItems::AItems()
 	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AItems::OnBeginOverlap);
 	BoxCollision->OnComponentEndOverlap.AddDynamic(this, &AItems::OnEndOverlap);
 	BoxCollision->SetGenerateOverlapEvents(true);
-
+	BoxCollision->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	EquipWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("EquipWidget"));
 	EquipWidget->SetupAttachment(BoxCollision);
-
+	
 }
 
 // Called when the game starts or when spawned

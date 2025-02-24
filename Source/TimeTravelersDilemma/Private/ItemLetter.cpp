@@ -10,10 +10,9 @@ AItemLetter::AItemLetter()
 {
 	RootComponent = BoxCollision;
 	LetterSprite = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("LetterSprite"));
-	LetterSprite->SetupAttachment(RootComponent);
-
+	LetterSprite->SetupAttachment(BoxCollision);
 	VisibilityCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("VisibilityCollision"));
-	VisibilityCollision->SetupAttachment(RootComponent);
+	VisibilityCollision->SetupAttachment(BoxCollision);
 	VisibilityCollision->OnComponentBeginOverlap.AddDynamic(this, &AItemLetter::OnVisibilityOverlap);
 	VisibilityCollision->SetGenerateOverlapEvents(true);
 
@@ -25,7 +24,10 @@ AItemLetter::AItemLetter()
 void AItemLetter::BeginPlay()
 {
 	Super::BeginPlay();
-	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AItemLetter::OnBeginOverlap);
+	//BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AItemLetter::OnBeginOverlap);
+	
+	
+	
 }
 
 //sets letter to be visible
