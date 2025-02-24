@@ -16,21 +16,21 @@ class TIMETRAVELERSDILEMMA_API AItems : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
+	
 	AItems();
 	
-	UPROPERTY(EditDefaultsOnly, Category = "Components")
+	UPROPERTY(EditDefaultsOnly, Category = "TimeTraveler|Components")
 	TObjectPtr<UBoxComponent> BoxCollision;
 
 protected:
-	// Called when the game starts or when spawned
+	
 	virtual void BeginPlay() override;
 	
-	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category = "Components")
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category = "TimeTraveler|Components")
 	TObjectPtr<UWidgetComponent> EquipWidget;
 
 public:	
-	// Called every frame
+	
 	virtual void Tick(float DeltaTime) override;
 
 	void HideEquipWidget();

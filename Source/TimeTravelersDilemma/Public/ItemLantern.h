@@ -20,7 +20,7 @@ class TIMETRAVELERSDILEMMA_API AItemLantern : public AItems
 	AItemLantern();
 	virtual void BeginPlay() override;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TimeTraveler|Components")
 	TObjectPtr<UPaperSpriteComponent> SpriteComponent;
 
 
