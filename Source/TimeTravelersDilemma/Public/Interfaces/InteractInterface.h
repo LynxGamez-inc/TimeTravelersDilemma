@@ -22,4 +22,15 @@ class TIMETRAVELERSDILEMMA_API IInteractInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+	// Interact function with an Actor input
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interaction")
+	void Interact(AActor* Instigator);
+
+	
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interaction")
+	void ConversationClosed();
+
+	
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interaction")
+	void SetInteractableState(bool bCanShowInteract);
 };

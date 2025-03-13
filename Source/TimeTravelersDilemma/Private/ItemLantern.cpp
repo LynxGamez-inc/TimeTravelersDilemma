@@ -41,7 +41,7 @@
  {
     Super::OnEndOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex);
 
-    TObjectPtr<AMainCharacter> MainCharacter = Cast<AMainCharacter>(OtherActor);
+    MainCharacter = Cast<AMainCharacter>(OtherActor);
     
     if (IsValid(MainCharacter))
     {
