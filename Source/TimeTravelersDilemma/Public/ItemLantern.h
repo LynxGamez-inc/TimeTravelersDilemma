@@ -8,6 +8,7 @@
 
 
 class UPaperSpriteComponent;
+class AMainCharacter;
 /**
  * 
  */
@@ -24,6 +25,8 @@ class TIMETRAVELERSDILEMMA_API AItemLantern : public AItems
 	TObjectPtr<UPaperSpriteComponent> SpriteComponent;
 
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "TimeTraveler|Character")
+	TObjectPtr<AMainCharacter> MainCharacter;
 	
 	
 	virtual void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent,

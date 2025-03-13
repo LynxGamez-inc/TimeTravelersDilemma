@@ -27,7 +27,7 @@
                                    const FHitResult& SweepResult)
  {
     Super::OnBeginOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-    TObjectPtr<AMainCharacter> MainCharacter = Cast<AMainCharacter>(OtherActor);
+    MainCharacter = Cast<AMainCharacter>(OtherActor);
     if (IsValid(MainCharacter))
     {
      MainCharacter->SetOverlappingItem(this);
