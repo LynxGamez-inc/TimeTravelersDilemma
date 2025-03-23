@@ -24,7 +24,7 @@ class TIMETRAVELERSDILEMMA_API IInteractInterface
 public:
 	// Interact function with an Actor input
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interaction")
-	void Interact(AActor* Instigator);
+	void Interact(AActor* InstigatorActor);
 
 	
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interaction")

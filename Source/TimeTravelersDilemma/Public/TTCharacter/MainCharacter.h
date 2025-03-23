@@ -81,7 +81,7 @@ public:
 
 
 	//Setters & Getters
-	FORCEINLINE void SetOverlappingItem(AItems* Item) {OverlappingItem = Item;}
+	FORCEINLINE void SetOverlappingItem(AActor* Item) {OverlappingItem = Item;}
 	FORCEINLINE void SetLetterVisibility(AItemLetter* bIsVisible){}
 	
 	UFUNCTION(BlueprintCallable, Category = "TimerTraverler|Enhanced Input")
@@ -104,13 +104,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TimerTraverler|Flipbooks")
 	TObjectPtr<UPaperFlipbook> FB_Jump;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TimerTraverler|Data Assets")
+	TObjectPtr<UDataAssets> CharacterConfig;
+	
 protected:
 	virtual void BeginPlay() override;
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnConstruction(const FTransform& Transform) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TimerTraverler|Data Assets")
-	TObjectPtr<UDataAssets> CharacterConfig;
+	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<APlayerController> PlayerController;
@@ -129,8 +131,8 @@ protected:
 	void AnimationUpdate();
 
 private:
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<AItems> OverlappingItem;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,meta=(AllowPrivateAccess=true))
+	TObjectPtr<AActor> OverlappingItem;
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<AItemLetter> ItemLetterInstance;

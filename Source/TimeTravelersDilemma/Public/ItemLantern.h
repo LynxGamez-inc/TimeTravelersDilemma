@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Items.h"
+#include "Interfaces/InteractInterface.h"
 #include "ItemLantern.generated.h"
 
 
@@ -13,7 +14,7 @@ class AMainCharacter;
  * 
  */
 UCLASS()
-class TIMETRAVELERSDILEMMA_API AItemLantern : public AItems
+class TIMETRAVELERSDILEMMA_API AItemLantern : public AItems,public  IInteractInterface
 {
 	GENERATED_BODY()
 
@@ -41,5 +42,7 @@ class TIMETRAVELERSDILEMMA_API AItemLantern : public AItems
 		AActor* OtherActor,
 		UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex) override;
+
+	virtual void Interact_Implementation(AActor* InstigatorActor) override;
 	
 };

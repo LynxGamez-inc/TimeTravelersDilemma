@@ -11,6 +11,7 @@
 #include "Camera/CameraComponent.h"
 #include "ItemLetter.h"
 #include "Blueprint/UserWidget.h"
+#include "Interfaces/InteractInterface.h"
 #include "TTCharacter/DataAssets.h"
 
 
@@ -130,11 +131,11 @@ void AMainCharacter::Equip()
 {
 	if (IsValid(OverlappingItem))
 	{
-		if (GetSprite()->DoesSocketExist(CharacterConfig->ItemSocket))
+		// Check if the overlapping item implements the interactable interface
+		if (OverlappingItem->Implements<UInteractInterface>())
 		{
-			OverlappingItem->AttachToComponent(GetSprite(),FAttachmentTransformRules::SnapToTargetNotIncludingScale,CharacterConfig->ItemSocket);
-			OverlappingItem->HideEquipWidget();
-			bIsLanternEquipped=true;
+			// Call the Interact function on the item
+			IInteractInterface::Execute_Interact(OverlappingItem, this);
 		}
 	}
 }

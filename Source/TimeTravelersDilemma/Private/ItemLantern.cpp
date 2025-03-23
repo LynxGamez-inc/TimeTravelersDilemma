@@ -5,6 +5,7 @@
 #include "PaperSpriteComponent.h"
 #include "TTCharacter/MainCharacter.h"
 #include "Components/WidgetComponent.h"
+#include "TTCharacter/DataAssets.h"
 
 
  AItemLantern::AItemLantern()
@@ -50,4 +51,19 @@
     }
  }
 
+
+void AItemLantern::Interact_Implementation(AActor* InstigatorActor)
+ {
+  // Ensure the instigator is a valid MainCharacter
+  
+  if (IsValid(MainCharacter))
+  {
+   if ( MainCharacter->GetSprite()->DoesSocketExist(MainCharacter->CharacterConfig->ItemSocket))
+   {
+    AttachToComponent(MainCharacter->GetSprite(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, MainCharacter->CharacterConfig->ItemSocket);
+   }
+  
+  }
+  }
+ 
 
