@@ -81,7 +81,9 @@ public:
 
 
 	//Setters & Getters
-	FORCEINLINE void SetOverlappingItem(AActor* Item) {OverlappingItem = Item;}
+	UFUNCTION(BlueprintCallable,Category = "TimerTraverler|Interaction")
+	void SetOverlappingActor(AActor* Actor);
+	
 	FORCEINLINE void SetLetterVisibility(AItemLetter* bIsVisible){}
 	
 	UFUNCTION(BlueprintCallable, Category = "TimerTraverler|Enhanced Input")
@@ -130,9 +132,13 @@ protected:
 
 	void AnimationUpdate();
 
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "TimerTraverler|Interaction")
+	void OnOverlappingActorSet();
+	
+
 private:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,meta=(AllowPrivateAccess=true))
-	TObjectPtr<AActor> OverlappingItem;
+	TObjectPtr<AActor> OverlappingActor;
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<AItemLetter> ItemLetterInstance;

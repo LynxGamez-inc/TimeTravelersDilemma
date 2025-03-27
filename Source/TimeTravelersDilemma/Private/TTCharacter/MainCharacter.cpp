@@ -129,13 +129,13 @@ void AMainCharacter::Jump()
 
 void AMainCharacter::Equip()
 {
-	if (IsValid(OverlappingItem))
+	if (IsValid(OverlappingActor))
 	{
 		// Check if the overlapping item implements the interactable interface
-		if (OverlappingItem->Implements<UInteractInterface>())
+		if (OverlappingActor->Implements<UInteractInterface>())
 		{
 			// Call the Interact function on the item
-			IInteractInterface::Execute_Interact(OverlappingItem, this);
+			IInteractInterface::Execute_Interact(OverlappingActor, this);
 		}
 	}
 }
@@ -173,6 +173,19 @@ void AMainCharacter::AnimationUpdate()
 		}
 		break;
 	}
+}
+
+
+
+void AMainCharacter::SetOverlappingActor(AActor* Actor)
+{
+	OverlappingActor = Actor;
+	OnOverlappingActorSet();
+}
+
+void AMainCharacter::OnOverlappingActorSet_Implementation()
+{
+	
 }
 
 void AMainCharacter::DisableIMC()

@@ -31,7 +31,7 @@
     MainCharacter = Cast<AMainCharacter>(OtherActor);
     if (IsValid(MainCharacter))
     {
-     MainCharacter->SetOverlappingItem(this);
+     MainCharacter->SetOverlappingActor(this);
      EquipWidget->GetWidget()->SetVisibility(ESlateVisibility::Visible);
     }
  }
@@ -46,7 +46,7 @@
     
     if (IsValid(MainCharacter))
     {
-      MainCharacter->SetOverlappingItem(nullptr);
+      MainCharacter->SetOverlappingActor(nullptr);
       EquipWidget->GetWidget()->SetVisibility(ESlateVisibility::Collapsed);
     }
  }
