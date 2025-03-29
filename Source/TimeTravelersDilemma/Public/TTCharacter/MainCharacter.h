@@ -134,6 +134,7 @@ protected:
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "TimerTraverler|Interaction")
 	void OnOverlappingActorSet();
+
 	
 
 private:
